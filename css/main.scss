@@ -1,0 +1,80 @@
+html, 
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	width: 100%;
+	height: 100%;
+}
+
+
+
+
+$dot-size: 12px;
+$dot-spacing: 16px;
+
+.menu {
+	width: 30px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	background-color: #1e1e1e;
+	
+	.dots {
+		width: $dot-size;
+		height: 80px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -40px 0 0 ($dot-size / -2);
+		padding: 0;
+
+		li {
+			list-style: none;
+			margin: 0 0 $dot-spacing;
+			padding: 0;
+			background-color: #fff;
+			width: 100%;
+			height: $dot-size;
+			border-radius: 50%;
+			-moz-border-radius: 50%;
+		}
+	}
+}
+
+
+.nav {
+	width: 30px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 10;
+	
+	.dots {
+		width: $dot-size;
+		height: 80px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -40px 0 0 ($dot-size / -2);
+		padding: 0;
+
+		li {
+			list-style: none;
+			margin: 0 0 $dot-spacing;
+			padding: 0;
+			background-color: #fff;
+			width: 100%;
+			height: $dot-size;
+			border-radius: 50%;
+			-moz-border-radius: 50%;
+		}
+	}
+}

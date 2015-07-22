@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Dustin J. Silk</title>
+	
+	<link href="css/lib/normalize.css" rel="stylesheet" type="text/css">
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+	<script type="application/x-glsl" id="sky-vertex">  
+	varying vec2 vUV;
+
+	void main() {  
+		vUV = uv;
+		vec4 pos = vec4(position, 1.0);
+		gl_Position = projectionMatrix * modelViewMatrix * pos;
+	}
+	</script>
+
+	<script type="application/x-glsl" id="sky-fragment">  
+	uniform sampler2D texture;  
+	varying vec2 vUV;
+
+	void main() {  
+		vec4 sample = texture2D(texture, vUV);
+		gl_FragColor = vec4(sample.xyz, sample.w);
+	}
+	</script>  
+
+
+	<script type="text/javascript" src="js/lib/jquery.js"></script>
+	<script type="text/javascript" src="js/lib/three.js"></script>
+
+	<!--
+	<script type="text/javascript" src="js/lib/shaderPass.js"></script>
+	<script type="text/javascript" src="js/lib/effectComposer.js"></script>
+	-->
+
+	<script type="text/javascript" src="js/lib/imageUtils.js"></script>
+	<script type="text/javascript" src="js/lib/SceneUtils.js"></script>
+
+	<script type="text/javascript" src="js/horizontalBlur.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
