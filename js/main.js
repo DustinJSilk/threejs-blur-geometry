@@ -76,28 +76,6 @@ function init () {
 	renderer.gammaOutput = true;
 
 
-
-	var effectController  = {
-		focus: 		1.0,
-		aperture:	0.025,
-		maxblur:	1.0
-
-	};
-
-	var matChanger = function( ) {
-
-		postprocessing.bokeh.uniforms[ "focus" ].value = effectController.focus;
-		postprocessing.bokeh.uniforms[ "aperture" ].value = effectController.aperture;
-		postprocessing.bokeh.uniforms[ "maxblur" ].value = effectController.maxblur;
-
-	};
-
-	var gui = new dat.GUI();
-	gui.add( effectController, "focus", 0.0, 3.0, 0.025 ).onChange( matChanger );
-	gui.add( effectController, "aperture", 0.001, 0.2, 0.001 ).onChange( matChanger );
-	gui.add( effectController, "maxblur", 0.0, 3.0, 0.025 ).onChange( matChanger );
-	gui.close();
-
 }
 
 
@@ -139,16 +117,14 @@ function animate () {
 
 var TestView = {
 	resources: {
-		geometry: null,
-		material: ,
-		model: 
+		geometry: null
 	},
 
 	renderLoopID: null,
 
 	init: function () {
-		$.when(about.load()).then(function () {
-			about.build();
+		$.when(TestView.load()).then(function () {
+			TestView.build();
 		});
 	},
 
@@ -167,18 +143,32 @@ var TestView = {
 
 	build: function () {
 
-		// this.resources.material = new THREE.MeshLambertMaterial({
-		// 	color: 0x5c5c5c,
-		// 	emissive: 0x000000,
-		// 	shading: THREE.FlatShading,
-		// 	transparent: true,
-		// 	opacity: 1
-		// });
 
-		this.resources.material = new THREE.ShaderMaterial( {
+		var material = new THREE.MeshLambertMaterial({
+			color: 0x5c5c5c,
+			emissive: 0x000000,
+			shading: THREE.FlatShading,
+			transparent: true,
+			opacity: 1
+		});
+
+		var model = new THREE.Mesh(this.resources.geometry, material);
+				
+		model.scale.set(3,3,3);
+		model.rotateY(3.14159);
+		model.position.set(100, -100, 0);
+		scene.add(model);
+
+
+
+		
+
+
+
+		var blurMaterial = new THREE.ShaderMaterial( {
 			uniforms: THREE.UniformsUtils.clone( THREE.HorizontalBlurShader.uniforms ),
-			vertexShader: HorizontalBlurShader.vertexShader,
-			fragmentShader: HorizontalBlurShader.fragmentShader,
+			vertexShader: THREE.HorizontalBlurShader.vertexShader,
+			fragmentShader: THREE.HorizontalBlurShader.fragmentShader,
 			color: 0x5c5c5c,
 			emissive: 0x000000,
 			shading: THREE.FlatShading,
@@ -186,12 +176,12 @@ var TestView = {
 			opacity: 1
 		} );
 
-		this.resources.model = new THREE.Mesh(this.resources.geometry, this.resources.material);
+		var blurModel = new THREE.Mesh(this.resources.geometry, blurMaterial);
 				
-		this.resources.model.scale.set(3,3,3);
-		this.resources.model.rotateY(3.14159);
-		this.resources.model.position.set(0, -100, 0);
-		scene.add(this.resources.model);		
+		blurModel.scale.set(3,3,3);
+		blurModel.rotateY(3.14159);
+		blurModel.position.set(-100, -100, 0);
+		scene.add(blurModel);		
 
 	}
 }
